@@ -1,0 +1,9 @@
+baseURL = 'https://YOURNAME.github.io/'
+languageCode = 'ja'
+title = 'My Library'
+theme = 'hugo-book'
+
+[params]
+  BookTheme = 'auto'
+  BookSection = '/'
+  BookCollapseSection = true

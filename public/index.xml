@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ivasiy Library</title>
+    <link>http://localhost:1313/</link>
+    <description>Recent content on Ivasiy Library</description>
+    <generator>Hugo</generator>
+    <language>ja</language>
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>数式テスト</title>
+      <link>http://localhost:1313/math/linear-algebra/test-math/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/math/linear-algebra/test-math/</guid>
+      <description>&lt;h1 id=&#34;大見出しとか&#34;&gt;大見出しとか&lt;a class=&#34;anchor&#34; href=&#34;#%e5%a4%a7%e8%a6%8b%e5%87%ba%e3%81%97%e3%81%a8%e3%81%8b&#34;&gt;#&lt;/a&gt;&lt;/h1&gt;&#xD;&#xA;&lt;h2 id=&#34;中見出しとか作りながら&#34;&gt;中見出しとか作りながら&lt;a class=&#34;anchor&#34; href=&#34;#%e4%b8%ad%e8%a6%8b%e5%87%ba%e3%81%97%e3%81%a8%e3%81%8b%e4%bd%9c%e3%82%8a%e3%81%aa%e3%81%8c%e3%82%89&#34;&gt;#&lt;/a&gt;&lt;/h2&gt;&#xD;&#xA;&lt;p&gt;次は, LaTeXとか使えたり, 画像が貼れたりしたらいいね。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>数式テスト2</title>
+      <link>http://localhost:1313/math/linear-algebra/test-math-2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/math/linear-algebra/test-math-2/</guid>
+      <description>&lt;p&gt;これは2つ目の数式テストページ。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
