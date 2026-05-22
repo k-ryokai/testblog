@@ -1,6 +1,6 @@
 {
-  "name": "Ivasiy Library",
-  "short_name": "Ivasiy Library",
+  "name": "My Library",
+  "short_name": "My Library",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

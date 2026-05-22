@@ -2,6 +2,8 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>http://localhost:1313/tech/haskell/</loc>
+  </url><url>
     <loc>http://localhost:1313/readme/</loc>
   </url><url>
     <loc>http://localhost:1313/math/linear-algebra/</loc>
@@ -19,6 +21,12 @@
     <loc>http://localhost:1313/travel/</loc>
   </url><url>
     <loc>http://localhost:1313/blog/</loc>
+  </url><url>
+    <loc>http://localhost:1313/history/</loc>
+  </url><url>
+    <loc>http://localhost:1313/language/</loc>
+  </url><url>
+    <loc>http://localhost:1313/tech/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/</loc>
   </url><url>

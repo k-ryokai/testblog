@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>高校数学 on Ivasiy Library</title>
+    <title>高校数学 on My Library</title>
     <link>http://localhost:1313/math/highschool-math/</link>
-    <description>Recent content in 高校数学 on Ivasiy Library</description>
+    <description>Recent content in 高校数学 on My Library</description>
     <generator>Hugo</generator>
     <language>ja</language>
     <atom:link href="http://localhost:1313/math/highschool-math/index.xml" rel="self" type="application/rss+xml" />

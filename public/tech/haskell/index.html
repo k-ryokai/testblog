@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Haskell 学習ログ#GHCi を起動する#`今回は Windows 環境で Haskell を学べるように、環境構築から最初のコード実行までを行った。
+1. Haskell 環境をインストールする#Haskell では現在、GHCup を使うのが標準的。
+GHCup は：
+GHC（コンパイラ） cabal（パッケージ管理） HLS（補完機能） Stack MSYS2 などをまとめて管理してくれる。
+公式：
+https://www.haskell.org/ghcup/
+PowerShell を開く#まず Windows Terminal / PowerShell を開く。
+インストールコマンドを実行#以下を PowerShell に貼り付けて実行：
+Set-ExecutionPolicy Bypass -Scope Process -Force; ` [System.Net.ServicePointManager]::SecurityProtocol = ` [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; ` &amp; ([scriptblock]::Create((Invoke-WebRequest https://www.haskell.org/ghcup/sh/bootstrap-haskell.ps1).Content))インストール中は基本 Enter を押して進める。
+2. Haskell が使えるか確認する#インストール後、PowerShell で：
+ghciを実行。
+成功すると：
+Prelude&gt;が表示される。
+GHCi とは#GHCi は Haskell の対話実行環境。
+Python の REPL に近い。
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="http://localhost:1313/tech/haskell/">
+  <meta property="og:site_name" content="My Library">
+  <meta property="og:title" content="Haskell">
+  <meta property="og:description" content="Haskell 学習ログ#GHCi を起動する#`今回は Windows 環境で Haskell を学べるように、環境構築から最初のコード実行までを行った。
+1. Haskell 環境をインストールする#Haskell では現在、GHCup を使うのが標準的。
+GHCup は：
+GHC（コンパイラ） cabal（パッケージ管理） HLS（補完機能） Stack MSYS2 などをまとめて管理してくれる。
+公式：
+https://www.haskell.org/ghcup/
+PowerShell を開く#まず Windows Terminal / PowerShell を開く。
+インストールコマンドを実行#以下を PowerShell に貼り付けて実行：
+Set-ExecutionPolicy Bypass -Scope Process -Force; ` [System.Net.ServicePointManager]::SecurityProtocol = ` [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; ` &amp; ([scriptblock]::Create((Invoke-WebRequest https://www.haskell.org/ghcup/sh/bootstrap-haskell.ps1).Content))インストール中は基本 Enter を押して進める。
+2. Haskell が使えるか確認する#インストール後、PowerShell で：
+ghciを実行。
+成功すると：
+Prelude&gt;が表示される。
+GHCi とは#GHCi は Haskell の対話実行環境。
+Python の REPL に近い。">
+  <meta property="og:locale" content="ja">
+  <meta property="og:type" content="website">
+
+
+  <meta itemprop="name" content="Haskell">
+  <meta itemprop="description" content="Haskell 学習ログ#GHCi を起動する#`今回は Windows 環境で Haskell を学べるように、環境構築から最初のコード実行までを行った。
+1. Haskell 環境をインストールする#Haskell では現在、GHCup を使うのが標準的。
+GHCup は：
+GHC（コンパイラ） cabal（パッケージ管理） HLS（補完機能） Stack MSYS2 などをまとめて管理してくれる。
+公式：
+https://www.haskell.org/ghcup/
+PowerShell を開く#まず Windows Terminal / PowerShell を開く。
+インストールコマンドを実行#以下を PowerShell に貼り付けて実行：
+Set-ExecutionPolicy Bypass -Scope Process -Force; ` [System.Net.ServicePointManager]::SecurityProtocol = ` [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; ` &amp; ([scriptblock]::Create((Invoke-WebRequest https://www.haskell.org/ghcup/sh/bootstrap-haskell.ps1).Content))インストール中は基本 Enter を押して進める。
+2. Haskell が使えるか確認する#インストール後、PowerShell で：
+ghciを実行。
+成功すると：
+Prelude&gt;が表示される。
+GHCi とは#GHCi は Haskell の対話実行環境。
+Python の REPL に近い。">
+  <meta itemprop="wordCount" content="437">
+
+<title>Haskell • My Library</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="http://localhost:1313/tech/haskell/">
+<link rel="stylesheet" href="/book.min.98c83e4c8e1c8661368bcb29bbaf4dcc9d31b8164f76aae322d82d86a9750c65.css" integrity="sha256-mMg&#43;TI4chmE2i8spu69NzJ0xuBZPdqrjItgthql1DGU=" crossorigin="anonymous">
+
+
+  <script defer type="module" src="/en.search.min.c3e40f3de3e9787bfea40f905c0f3fd56afcfb6e5ea4f00eeba298f926df7132.js" integrity="sha256-w&#43;QPPePpeHv&#43;pA&#43;QXA8/1Wr8&#43;25epPAO66KY&#43;SbfcTI=" crossorigin="anonymous"></script>
+<link rel="alternate" type="application/rss+xml" href="http://localhost:1313/tech/haskell/index.xml" title="Haskell" />
+
+  
+</head>
+<body dir="ltr" class="book-kind-section book-type-tech">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>My Library</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="検索"
+    aria-label="検索"
+    maxlength="64" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/readme/" class="">
+      リード・ミー</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/math/" class="">
+      数学</a>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/math/linear-algebra/" class="">
+      線形代数</a>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/math/linear-algebra/test-math/" class="">
+      数式テスト</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/math/linear-algebra/test-math-2/" class="">
+      数式テスト2</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/math/highschool-math/" class="">
+      高校数学</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/philosophy/" class="">
+      哲学</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/travel/" class="">
+      旅行</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/blog/" class="">
+      雑記</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/history/" class="">
+      歴史</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/language/" class="">
+      言語</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/tech/" class="">
+      技術</a>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/tech/haskell/" class="active">
+      Haskell</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>Haskell</h3>
+
+  <label for="toc-control">
+    
+    <img src="/icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#ghci-を起動する">GHCi を起動する</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#powershell-を開く">PowerShell を開く</a></li>
+    <li><a href="#インストールコマンドを実行">インストールコマンドを実行</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#ghci-とは">GHCi とは</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#現在地確認">現在地確認</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="haskell-学習ログ">Haskell 学習ログ<a class="anchor" href="#haskell-%e5%ad%a6%e7%bf%92%e3%83%ad%e3%82%b0">#</a></h1>
+<h2 id="ghci-を起動する">GHCi を起動する<a class="anchor" href="#ghci-%e3%82%92%e8%b5%b7%e5%8b%95%e3%81%99%e3%82%8b">#</a></h2>
+<p>`今回は Windows 環境で Haskell を学べるように、環境構築から最初のコード実行までを行った。</p>
+<hr>
+<h1 id="1-haskell-環境をインストールする">1. Haskell 環境をインストールする<a class="anchor" href="#1-haskell-%e7%92%b0%e5%a2%83%e3%82%92%e3%82%a4%e3%83%b3%e3%82%b9%e3%83%88%e3%83%bc%e3%83%ab%e3%81%99%e3%82%8b">#</a></h1>
+<p>Haskell では現在、<code>GHCup</code> を使うのが標準的。</p>
+<p>GHCup は：</p>
+<ul>
+<li>GHC（コンパイラ）</li>
+<li>cabal（パッケージ管理）</li>
+<li>HLS（補完機能）</li>
+<li>Stack</li>
+<li>MSYS2</li>
+</ul>
+<p>などをまとめて管理してくれる。</p>
+<p>公式：</p>
+<p><a href="https://www.haskell.org/ghcup/">https://www.haskell.org/ghcup/</a></p>
+<hr>
+<h2 id="powershell-を開く">PowerShell を開く<a class="anchor" href="#powershell-%e3%82%92%e9%96%8b%e3%81%8f">#</a></h2>
+<p>まず Windows Terminal / PowerShell を開く。</p>
+<hr>
+<h2 id="インストールコマンドを実行">インストールコマンドを実行<a class="anchor" href="#%e3%82%a4%e3%83%b3%e3%82%b9%e3%83%88%e3%83%bc%e3%83%ab%e3%82%b3%e3%83%9e%e3%83%b3%e3%83%89%e3%82%92%e5%ae%9f%e8%a1%8c">#</a></h2>
+<p>以下を PowerShell に貼り付けて実行：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>Set-ExecutionPolicy Bypass -Scope <span style="color:#66d9ef">Process</span> -Force; `
+</span></span><span style="display:flex;"><span>[<span style="color:#66d9ef">System.Net.ServicePointManager</span>]::SecurityProtocol = `
+</span></span><span style="display:flex;"><span>[<span style="color:#66d9ef">System.Net.ServicePointManager</span>]::SecurityProtocol <span style="color:#f92672">-bor</span> <span style="color:#ae81ff">3072</span>; `
+</span></span><span style="display:flex;"><span>&amp; ([<span style="color:#66d9ef">scriptblock</span>]::Create((Invoke-WebRequest https<span style="color:#960050;background-color:#1e0010">:</span>//www.haskell.org/ghcup/sh/bootstrap-haskell.ps1).Content))</span></span></code></pre></div><p>インストール中は基本 Enter を押して進める。</p>
+<hr>
+<h1 id="2-haskell-が使えるか確認する">2. Haskell が使えるか確認する<a class="anchor" href="#2-haskell-%e3%81%8c%e4%bd%bf%e3%81%88%e3%82%8b%e3%81%8b%e7%a2%ba%e8%aa%8d%e3%81%99%e3%82%8b">#</a></h1>
+<p>インストール後、PowerShell で：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>ghci</span></span></code></pre></div><p>を実行。</p>
+<p>成功すると：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Prelude&gt;</span></span></code></pre></div><p>が表示される。</p>
+<hr>
+<h2 id="ghci-とは">GHCi とは<a class="anchor" href="#ghci-%e3%81%a8%e3%81%af">#</a></h2>
+<p><code>GHCi</code> は Haskell の対話実行環境。</p>
+<p>Python の REPL に近い。</p>
+<p>その場でコードを試せる。</p>
+<hr>
+<h1 id="3-作業フォルダを決める">3. 作業フォルダを決める<a class="anchor" href="#3-%e4%bd%9c%e6%a5%ad%e3%83%95%e3%82%a9%e3%83%ab%e3%83%80%e3%82%92%e6%b1%ba%e3%82%81%e3%82%8b">#</a></h1>
+<p>今回は：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>C:\Users\koizu\training</span></span></code></pre></div><p>を作業場所にする。</p>
+<p>PowerShell で移動：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>cd <span style="color:#e6db74">&#34;C:\Users\koizu\training&#34;</span></span></span></code></pre></div><hr>
+<h2 id="現在地確認">現在地確認<a class="anchor" href="#%e7%8f%be%e5%9c%a8%e5%9c%b0%e7%a2%ba%e8%aa%8d">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>pwd</span></span></code></pre></div><p>現在いるフォルダが表示される。</p>
+<hr>
+<h1 id="4-最初の-haskell-ファイルを作る">4. 最初の Haskell ファイルを作る<a class="anchor" href="#4-%e6%9c%80%e5%88%9d%e3%81%ae-haskell-%e3%83%95%e3%82%a1%e3%82%a4%e3%83%ab%e3%82%92%e4%bd%9c%e3%82%8b">#</a></h1>
+<p>メモ帳で Haskell ファイルを作成：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>notepad hello.hs</span></span></code></pre></div><p>ファイルが存在しない場合は「作成しますか？」と聞かれるので「はい」。</p>
+<hr>
+<h1 id="数値計算">数値計算<a class="anchor" href="#%e6%95%b0%e5%80%a4%e8%a8%88%e7%ae%97">#</a></h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span></span></span></code></pre></div><p>結果：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#ae81ff">3</span></span></span></code></pre></div><hr>
+<h1 id="-は何なのか"><code>+</code> は何なのか<a class="anchor" href="#-%e3%81%af%e4%bd%95%e3%81%aa%e3%81%ae%e3%81%8b">#</a></h1>
+<p>Haskell では <code>+</code> は特殊構文ではなく関数。</p>
+<p>つまり：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span></span></span></code></pre></div><p>は実質：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span>(<span style="color:#f92672">+</span>) <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span></span></span></code></pre></div><p>と同じ。</p>
+<hr>
+<h1 id="なぜ--と書くのか">なぜ <code>(+)</code> と書くのか<a class="anchor" href="#%e3%81%aa%e3%81%9c--%e3%81%a8%e6%9b%b8%e3%81%8f%e3%81%ae%e3%81%8b">#</a></h1>
+<p>通常、関数は：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#a6e22e">f</span> x</span></span></code></pre></div><p>の形で適用する。</p>
+<p>しかし <code>+</code> は「中置演算子」として定義されているので：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span></span></span></code></pre></div><p>のように真ん中に置ける。</p>
+<hr>
+<h1 id="関数として扱うには括弧が必要">関数として扱うには括弧が必要<a class="anchor" href="#%e9%96%a2%e6%95%b0%e3%81%a8%e3%81%97%e3%81%a6%e6%89%b1%e3%81%86%e3%81%ab%e3%81%af%e6%8b%ac%e5%bc%a7%e3%81%8c%e5%bf%85%e8%a6%81">#</a></h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span>(<span style="color:#f92672">+</span>)</span></span></code></pre></div><p>と書くと、</p>
+<blockquote class='book-hint '>
+<p>「演算子そのもの」</p>
+</blockquote><p>を表せる。</p>
+<p>例えば：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#66d9ef">:</span>t (<span style="color:#f92672">+</span>)</span></span></code></pre></div><p>を実行すると：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span>(<span style="color:#f92672">+</span>) <span style="color:#f92672">::</span> <span style="color:#66d9ef">Num</span> a <span style="color:#f92672">=&gt;</span> a <span style="color:#f92672">-&gt;</span> a <span style="color:#f92672">-&gt;</span> a</span></span></code></pre></div><p>となる。</p>
+<hr>
+<h1 id="この型を分解する">この型を分解する<a class="anchor" href="#%e3%81%93%e3%81%ae%e5%9e%8b%e3%82%92%e5%88%86%e8%a7%a3%e3%81%99%e3%82%8b">#</a></h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#66d9ef">Num</span> a <span style="color:#f92672">=&gt;</span> a <span style="color:#f92672">-&gt;</span> a <span style="color:#f92672">-&gt;</span> a</span></span></code></pre></div><p>は：</p>
+<blockquote class='book-hint '>
+<p>Num 型クラスに属する型 <code>a</code> を2つ受け取り、<code>a</code> を返す関数</p>
+</blockquote><p>という意味。</p>
+<hr>
+<h1 id="--の意味"><code>-&gt;</code> の意味<a class="anchor" href="#--%e3%81%ae%e6%84%8f%e5%91%b3">#</a></h1>
+<p>Haskell の関数型は：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">入力型</span> <span style="color:#f92672">-&gt;</span> <span style="color:#960050;background-color:#1e0010">出力型</span></span></span></code></pre></div><p>で表す。</p>
+<p>つまり：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#66d9ef">Int</span> <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">Int</span></span></span></code></pre></div><p>なら：</p>
+<blockquote class='book-hint '>
+<p>Int を受け取って Int を返す関数</p>
+</blockquote><hr>
+<h1 id="-の場合"><code>(+)</code> の場合<a class="anchor" href="#-%e3%81%ae%e5%a0%b4%e5%90%88">#</a></h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#a6e22e">a</span> <span style="color:#f92672">-&gt;</span> a <span style="color:#f92672">-&gt;</span> a</span></span></code></pre></div><p>は右結合なので：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#a6e22e">a</span> <span style="color:#f92672">-&gt;</span> (a <span style="color:#f92672">-&gt;</span> a)</span></span></code></pre></div><p>と同じ。</p>
+<p>つまり <code>(+)</code> は本質的には：</p>
+<ol>
+<li>最初の引数を受け取る</li>
+<li>「残り1引数を待つ関数」を返す</li>
+</ol>
+<p>という構造。</p>
+<hr>
+<h1 id="これはカリー化">これはカリー化<a class="anchor" href="#%e3%81%93%e3%82%8c%e3%81%af%e3%82%ab%e3%83%aa%e3%83%bc%e5%8c%96">#</a></h1>
+<p>Haskell の関数は基本的に全て：</p>
+<blockquote class='book-hint '>
+<p>1引数関数</p>
+</blockquote><p>として扱われる。</p>
+<p>複数引数関数に見えるものも、</p>
+<p>実際は：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>a -&gt; (b -&gt; c)</span></span></code></pre></div><p>のようなネスト構造。</p>
+<p>これをカリー化（currying）という。</p>
+<hr>
+<h1 id="succ"><code>succ</code><a class="anchor" href="#succ">#</a></h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#a6e22e">succ</span> <span style="color:#ae81ff">10</span></span></span></code></pre></div><p>結果：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#ae81ff">11</span></span></span></code></pre></div><hr>
+<h1 id="succ-の型を見る"><code>succ</code> の型を見る<a class="anchor" href="#succ-%e3%81%ae%e5%9e%8b%e3%82%92%e8%a6%8b%e3%82%8b">#</a></h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#66d9ef">:</span>t succ</span></span></code></pre></div><p>結果：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#a6e22e">succ</span> <span style="color:#f92672">::</span> <span style="color:#66d9ef">Enum</span> a <span style="color:#f92672">=&gt;</span> a <span style="color:#f92672">-&gt;</span> a</span></span></code></pre></div><hr>
+<h1 id="enum"><code>Enum</code><a class="anchor" href="#enum">#</a></h1>
+<p><code>Enum</code> は型クラス。</p>
+<p>「順番を持つ型」を表す。</p>
+<p>例えば：</p>
+<ul>
+<li>Int</li>
+<li>Char</li>
+<li>Ordering</li>
+</ul>
+<p>など。</p>
+<hr>
+<h1 id="つまり-succ">つまり <code>succ</code><a class="anchor" href="#%e3%81%a4%e3%81%be%e3%82%8a-succ">#</a></h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#a6e22e">succ</span></span></span></code></pre></div><p>は：</p>
+<blockquote class='book-hint '>
+<p>次の値を返す関数</p>
+</blockquote><hr>
+<p>例えば：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#a6e22e">succ</span> <span style="color:#e6db74">&#39;a&#39;</span></span></span></code></pre></div><p>結果：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#e6db74">&#39;b&#39;</span></span></span></code></pre></div><hr>
+<h1 id="関数適用">関数適用<a class="anchor" href="#%e9%96%a2%e6%95%b0%e9%81%a9%e7%94%a8">#</a></h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#a6e22e">sqrt</span> <span style="color:#ae81ff">16</span></span></span></code></pre></div><p>結果：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#ae81ff">4.0</span></span></span></code></pre></div><hr>
+<h1 id="なぜ-sqrt16-ではないのか">なぜ <code>sqrt(16)</code> ではないのか<a class="anchor" href="#%e3%81%aa%e3%81%9c-sqrt16-%e3%81%a7%e3%81%af%e3%81%aa%e3%81%84%e3%81%ae%e3%81%8b">#</a></h1>
+<p>Haskell において：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#a6e22e">f</span> x</span></span></code></pre></div><p>は：</p>
+<blockquote class='book-hint '>
+<p>関数適用</p>
+</blockquote><p>を表す基本構文。</p>
+<p>関数適用は演算子より優先順位が高い。</p>
+<p>例えば：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#a6e22e">f</span> x <span style="color:#f92672">+</span> y</span></span></code></pre></div><p>は：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span>(f x) <span style="color:#f92672">+</span> y</span></span></code></pre></div><p>として解釈される。</p>
+<hr>
+<h1 id="文字列">文字列<a class="anchor" href="#%e6%96%87%e5%ad%97%e5%88%97">#</a></h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#e6db74">&#34;Hello&#34;</span></span></span></code></pre></div><p>結果：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#e6db74">&#34;Hello&#34;</span></span></span></code></pre></div><hr>
+<h1 id="文字列の型">文字列の型<a class="anchor" href="#%e6%96%87%e5%ad%97%e5%88%97%e3%81%ae%e5%9e%8b">#</a></h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#66d9ef">:</span>t <span style="color:#e6db74">&#34;Hello&#34;</span></span></span></code></pre></div><p>結果：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#e6db74">&#34;Hello&#34;</span> <span style="color:#f92672">::</span> <span style="color:#66d9ef">String</span></span></span></code></pre></div><hr>
+<h1 id="string-の正体"><code>String</code> の正体<a class="anchor" href="#string-%e3%81%ae%e6%ad%a3%e4%bd%93">#</a></h1>
+<p>実は：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#66d9ef">String</span></span></span></code></pre></div><p>は型シノニム。</p>
+<p>定義は：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#66d9ef">String</span> <span style="color:#f92672">=</span> [<span style="color:#66d9ef">Char</span>]</span></span></code></pre></div><p>つまり：</p>
+<blockquote class='book-hint '>
+<p>文字列 = Char のリスト</p>
+</blockquote><hr>
+<h1 id="リスト記法">リスト記法<a class="anchor" href="#%e3%83%aa%e3%82%b9%e3%83%88%e8%a8%98%e6%b3%95">#</a></h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span>[<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>]</span></span></code></pre></div><p>はリスト。</p>
+<p>型を見る：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#66d9ef">:</span>t [<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>]</span></span></code></pre></div><p>結果：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span>[<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>] <span style="color:#f92672">::</span> <span style="color:#66d9ef">Num</span> a <span style="color:#f92672">=&gt;</span> [a]</span></span></code></pre></div><hr>
+<h1 id="a"><code>[a]</code><a class="anchor" href="#a">#</a></h1>
+<p>これは：</p>
+<blockquote class='book-hint '>
+<p>型 <code>a</code> のリスト</p>
+</blockquote><p>を意味する。</p>
+<hr>
+<h1 id="string-が-char-ということ"><code>String</code> が <code>[Char]</code> ということ<a class="anchor" href="#string-%e3%81%8c-char-%e3%81%a8%e3%81%84%e3%81%86%e3%81%93%e3%81%a8">#</a></h1>
+<p>つまり：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#e6db74">&#34;abc&#34;</span></span></span></code></pre></div><p>は本質的には：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span>[<span style="color:#e6db74">&#39;a&#39;</span>,<span style="color:#e6db74">&#39;b&#39;</span>,<span style="color:#e6db74">&#39;c&#39;</span>]</span></span></code></pre></div><p>と同じ。</p>
+<hr>
+<h1 id="heading"><code>++</code><a class="anchor" href="#heading">#</a></h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#e6db74">&#34;Hello&#34;</span> <span style="color:#f92672">++</span> <span style="color:#e6db74">&#34; World&#34;</span></span></span></code></pre></div><p>結果：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#e6db74">&#34;Hello World&#34;</span></span></span></code></pre></div><hr>
+<h1 id="-の型"><code>++</code> の型<a class="anchor" href="#-%e3%81%ae%e5%9e%8b">#</a></h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#66d9ef">:</span>t (<span style="color:#f92672">++</span>)</span></span></code></pre></div><p>結果：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span>(<span style="color:#f92672">++</span>) <span style="color:#f92672">::</span> [a] <span style="color:#f92672">-&gt;</span> [a] <span style="color:#f92672">-&gt;</span> [a]</span></span></code></pre></div><hr>
+<h1 id="つまり--は">つまり <code>++</code> は<a class="anchor" href="#%e3%81%a4%e3%81%be%e3%82%8a--%e3%81%af">#</a></h1>
+<blockquote class='book-hint '>
+<p>リスト結合関数</p>
+</blockquote><p>文字列専用ではない。</p>
+<p>例えば：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span>[<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>] <span style="color:#f92672">++</span> [<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>]</span></span></code></pre></div><p>結果：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span>[<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>]</span></span></code></pre></div><hr>
+<h1 id="型を見る">型を見る<a class="anchor" href="#%e5%9e%8b%e3%82%92%e8%a6%8b%e3%82%8b">#</a></h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#66d9ef">:</span>t <span style="color:#ae81ff">1</span></span></span></code></pre></div><p>結果：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#ae81ff">1</span> <span style="color:#f92672">::</span> <span style="color:#66d9ef">Num</span> p <span style="color:#f92672">=&gt;</span> p</span></span></code></pre></div><hr>
+<h1 id="なぜ型が確定していないのか">なぜ型が確定していないのか<a class="anchor" href="#%e3%81%aa%e3%81%9c%e5%9e%8b%e3%81%8c%e7%a2%ba%e5%ae%9a%e3%81%97%e3%81%a6%e3%81%84%e3%81%aa%e3%81%84%e3%81%ae%e3%81%8b">#</a></h1>
+<p><code>1</code> 単体では：</p>
+<ul>
+<li>Int</li>
+<li>Integer</li>
+<li>Float</li>
+<li>Double</li>
+</ul>
+<p>などどれにもなれる。</p>
+<p>そのため：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#66d9ef">Num</span> p <span style="color:#f92672">=&gt;</span> p</span></span></code></pre></div><p>という形になっている。</p>
+<hr>
+<h1 id="型クラス制約">型クラス制約<a class="anchor" href="#%e5%9e%8b%e3%82%af%e3%83%a9%e3%82%b9%e5%88%b6%e7%b4%84">#</a></h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#66d9ef">Num</span> p <span style="color:#f92672">=&gt;</span></span></span></code></pre></div><p>は：</p>
+<blockquote class='book-hint '>
+<p>p は Num 型クラスのインスタンスでなければならない</p>
+</blockquote><p>という制約。</p>
+<hr>
+<h1 id="関数を定義する">関数を定義する<a class="anchor" href="#%e9%96%a2%e6%95%b0%e3%82%92%e5%ae%9a%e7%be%a9%e3%81%99%e3%82%8b">#</a></h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#a6e22e">double</span> x <span style="color:#f92672">=</span> x <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span></span></span></code></pre></div><hr>
+<h1 id="これは何か">これは何か<a class="anchor" href="#%e3%81%93%e3%82%8c%e3%81%af%e4%bd%95%e3%81%8b">#</a></h1>
+<p>これは：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#a6e22e">double</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">\</span>x <span style="color:#f92672">-&gt;</span> x <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span></span></span></code></pre></div><p>の糖衣構文。</p>
+<hr>
+<h1 id="heading-1"><code>\</code><a class="anchor" href="#heading-1">#</a></h1>
+<p>Haskell では：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#a6e22e">\</span>x <span style="color:#f92672">-&gt;</span> <span style="color:#f92672">...</span></span></span></code></pre></div><p>でラムダ式を書く。</p>
+<p>つまり：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#a6e22e">double</span> x <span style="color:#f92672">=</span> x <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span></span></span></code></pre></div><p>は、</p>
+<blockquote class='book-hint '>
+<p>x を受け取って x*2 を返す無名関数</p>
+</blockquote><p>を <code>double</code> に束縛している。</p>
+<hr>
+<h1 id="型を見る-1">型を見る<a class="anchor" href="#%e5%9e%8b%e3%82%92%e8%a6%8b%e3%82%8b-1">#</a></h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#66d9ef">:</span>t double</span></span></code></pre></div><p>結果：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#a6e22e">double</span> <span style="color:#f92672">::</span> <span style="color:#66d9ef">Num</span> a <span style="color:#f92672">=&gt;</span> a <span style="color:#f92672">-&gt;</span> a</span></span></code></pre></div><hr>
+<h1 id="意味">意味<a class="anchor" href="#%e6%84%8f%e5%91%b3">#</a></h1>
+<ul>
+<li>Num 型クラスに属する型を受け取り</li>
+<li>同じ型を返す関数</li>
+</ul>
+<hr>
+<h1 id="実行">実行<a class="anchor" href="#%e5%ae%9f%e8%a1%8c">#</a></h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#a6e22e">double</span> <span style="color:#ae81ff">5</span></span></span></code></pre></div><p>結果：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#ae81ff">10</span></span></span></code></pre></div><hr>
+<h1 id="ここまでで見えてきたこと">ここまでで見えてきたこと<a class="anchor" href="#%e3%81%93%e3%81%93%e3%81%be%e3%81%a7%e3%81%a7%e8%a6%8b%e3%81%88%e3%81%a6%e3%81%8d%e3%81%9f%e3%81%93%e3%81%a8">#</a></h1>
+<p>現時点で重要なのは：</p>
+<ul>
+<li>演算子も関数</li>
+<li>関数適用が中心</li>
+<li>関数はカリー化されている</li>
+<li>型クラスがある</li>
+<li>String は <code>[Char]</code></li>
+<li><code>++</code> はリスト結合</li>
+<li>関数定義はラムダへの束縛</li>
+</ul>
+<p>という点。</p>
+<p>これは今後：</p>
+<ul>
+<li>高階関数</li>
+<li>map</li>
+<li>foldr</li>
+<li>モナド</li>
+<li>関数合成</li>
+</ul>
+<p>などを理解する基礎になる。</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <footer class="book-footer">
+  <div class="flex flex-wrap justify-between">
+  </div>
+</footer>
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#ghci-を起動する">GHCi を起動する</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#powershell-を開く">PowerShell を開く</a></li>
+    <li><a href="#インストールコマンドを実行">インストールコマンドを実行</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#ghci-とは">GHCi とは</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#現在地確認">現在地確認</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
